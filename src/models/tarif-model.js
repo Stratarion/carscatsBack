@@ -7,7 +7,11 @@ const TarifSchema = new Schema({
   },
   description: {
     type: String
-  }
+  },
+  duration: { // продолжительность действия тарифа
+    type: Number
+  },
+
 })
-const TarifModel = mongoose.model('TarifModelю', TarifSchema)
+const TarifModel = mongoose.model('TarifModel', TarifSchema)
 module.exports = TarifModel

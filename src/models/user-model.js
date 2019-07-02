@@ -6,7 +6,14 @@ const bcrypt = require('bcryptjs')
 const userSchema = new Schema({
   email: String,
   username: String,
-  password: String
+  password: String,
+  contry: String,
+  phone: String,
+  
+  date: {
+    type: Date,
+    default: Date.now
+  }
 }, {
  
   // 3
@@ -18,4 +25,4 @@ const userSchema = new Schema({
  
 // 4
 const User = mongoose.model('user', userSchema)
-module.exports = User
+module.exports = User 

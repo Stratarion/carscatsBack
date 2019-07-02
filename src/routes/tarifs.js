@@ -5,8 +5,11 @@ const Tarif = require('../models/tarif-model')
 router.post('/tarifs', (req, res) => {
     const tarif = new Tarif({
       title: req.body.title,
-      description: req.body.description
+      description: req.body.description,
+      duration: req.body.duration
     })
+
+
     tarif.save((err, data) => {
       if (err) {
         console.log(err)
@@ -21,7 +24,7 @@ router.post('/tarifs', (req, res) => {
 
 
 router.get('/tarifs', (req, res) => {
-    Tarif.find({}, 'title description', (err, tarifs) => {
+    Tarif.find({}, 'title description duration', (err, tarifs) => {
         if (err) {
             res.sendStatus(500)
         } else {
@@ -29,4 +32,51 @@ router.get('/tarifs', (req, res) => {
         }
     }).sort({ _id: -1 })
 })
+
+router.get('/tarifs/:id', (req, res) => {
+  Tarif.findById(req.params.id, 'title description duration', (err, tarif) => {
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      res.send(tarif)
+    }
+  })
+})
+
+
+router.put('/tarifs/:id', (req, res) => {
+  Tarif.findById(req.params.id, 'title description duration', (err, tarif) => {
+    if (err) {
+      console.log(err)
+    } else {
+      if (req.body.title) {
+        tarif.title = req.body.title
+      }
+      if (req.body.description) {
+        tarif.description = req.body.description
+      }
+      if (req.body.duration) {
+        tarif.duration = req.body.duration
+      }
+      tarif.save(err => {
+        if (err) {
+          res.sendStatus(500)
+        } else {
+          res.sendStatus(200)
+        }
+      })
+    }
+  })
+})
+
+router.delete('/tarifs/:id', (req, res) => {
+  Tarif.remove({ _id: req.params.id }, err => {
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      res.sendStatus(200)
+    }
+  })
+})
+
 module.exports = router
