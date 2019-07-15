@@ -6,7 +6,8 @@ router.post('/tarifs', (req, res) => {
     const tarif = new Tarif({
       title: req.body.title,
       description: req.body.description,
-      duration: req.body.duration
+      duration: req.body.duration,
+      price: req.body.price
     })
 
 
@@ -24,7 +25,7 @@ router.post('/tarifs', (req, res) => {
 
 
 router.get('/tarifs', (req, res) => {
-    Tarif.find({}, 'title description duration', (err, tarifs) => {
+    Tarif.find({}, 'title description duration price', (err, tarifs) => {
         if (err) {
             res.sendStatus(500)
         } else {
@@ -34,7 +35,7 @@ router.get('/tarifs', (req, res) => {
 })
 
 router.get('/tarifs/:id', (req, res) => {
-  Tarif.findById(req.params.id, 'title description duration', (err, tarif) => {
+  Tarif.findById(req.params.id, 'title description duration price', (err, tarif) => {
     if (err) {
       res.sendStatus(500)
     } else {
@@ -57,6 +58,9 @@ router.put('/tarifs/:id', (req, res) => {
       }
       if (req.body.duration) {
         tarif.duration = req.body.duration
+      }
+      if (req.body.price) {
+        tarif.price = req.body.price
       }
       tarif.save(err => {
         if (err) {

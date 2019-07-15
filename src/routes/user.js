@@ -77,4 +77,36 @@ users.post('/login', (req, res) => {
         })
 })
 
+users.get('/users', (req, res) => {
+    User.find({}, 'first_name last_name role contry email phone', (err, users) => {
+        if (err) {
+            res.sendStatus(500)
+        } else {
+            res.send({ users: users })
+        }
+    }).sort({ _id: -1 })
+})
+
+users.put('/users/:id', (req, res) => {
+    console.log(req.params.id)
+    // User.findById(req.body.id).then (user => {console.log(user)})
+    User.findById(req.body.id, 'first_name phone', (err, user) => {
+        if (err) {
+        console.log(err)
+        } else {
+            console.log(user)
+
+            if (req.body.phone) {
+            user.phone = req.body.phone
+            }
+        }
+        user.save(err => {
+            if (err) {
+              res.sendStatus(500)
+            } else {
+              res.sendStatus(200)
+            }
+          })
+    })
+})
 module.exports = users

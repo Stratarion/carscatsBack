@@ -4,7 +4,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const config = require('./config/config')
 const mongoose = require('mongoose')
-
+const nodemailer = require('nodemailer');
 
 
 
@@ -22,6 +22,8 @@ app.use(cors())
 app.use(require('./routes/index'))
 app.use(require('./routes/tarifs'))
 app.use(require('./routes/user'))
+app.use(require('./routes/mailSendler'))
+
 
 
 mongoose.connect(config.dbURL, config.dbOptions)

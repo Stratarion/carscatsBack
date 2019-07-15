@@ -3,14 +3,23 @@ const Schema = mongoose.Schema
 const TarifSchema = new Schema({
   title: {
     type: String,
-    unique: true
+    unique: true,
+    required: true
+
   },
   description: {
     type: String
   },
   duration: { // продолжительность действия тарифа
-    type: Number
+    type: Number,
+    required: true
+
   },
+  price: {
+    type: Number,
+    required: true
+
+  }
 
 })
 const TarifModel = mongoose.model('TarifModel', TarifSchema)
