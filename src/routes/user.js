@@ -78,10 +78,11 @@ users.post('/login', (req, res) => {
 })
 
 users.get('/users', (req, res) => {
-    User.find({}, 'first_name last_name role contry email phone', (err, users) => {
+    User.find({}, 'first_name last_name role contry email phone createdAt', (err, users) => {
         if (err) {
             res.sendStatus(500)
         } else {
+            console.log(users[0])
             res.send({ users: users })
         }
     }).sort({ _id: -1 })
@@ -97,8 +98,21 @@ users.put('/users/:id', (req, res) => {
             console.log(user)
 
             if (req.body.phone) {
-            user.phone = req.body.phone
+                user.phone = req.body.phone
             }
+            if (req.body.first_name) {
+                user.first_name = req.body.first_name
+            }
+            if (req.body.last_name) {
+                user.last_name = req.body.last_name
+            }
+            if (req.body.email) {
+                user.email = req.body.email
+            }
+            if (req.body.contry) {
+                user.contry = req.body.contry
+            }
+            
         }
         user.save(err => {
             if (err) {

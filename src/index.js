@@ -23,6 +23,10 @@ app.use(require('./routes/index'))
 app.use(require('./routes/tarifs'))
 app.use(require('./routes/user'))
 app.use(require('./routes/mailSendler'))
+app.use(require('./routes/access'))
+app.use(require('./routes/news'))
+
+
 
 
 
